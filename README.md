@@ -1,7 +1,7 @@
 # Indexación y Compactación de Datos a Gran Escala
 
 **Curso:** Programación Concurrente y Paralela
-**Entrega:** primer avance (50 %) · propuesta de diseño
+**Entrega:** · propuesta de diseño
 
 > **Estado:** este avance es teórico y de diseño. **PACK() e INDEX() todavía no están implementados.**
 > El código de este repositorio es el proyecto anterior, que usaremos como base.
