@@ -1,0 +1,41 @@
+# --- Compilados y carpetas de build ---
+*.class
+out/
+build/
+target/
+bin/
+
+# --- Datos generados por el programa (se regeneran al ejecutar) ---
+*.dat
+repositorio/
+cluster/
+data/
+
+# --- Salidas temporales y registros ---
+*.log
+*.tmp
+*.bak
+logs/
+
+# --- Configuración personal de IntelliJ IDEA ---
+# (se conservan .idea/misc.xml, .idea/modules.xml y el .iml para abrir el proyecto)
+.idea/workspace.xml
+.idea/shelf/
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/httpRequests/
+.idea/dataSources/
+.idea/dataSources.local.xml
+*.iws
+
+# --- Otros IDE ---
+.vscode/
+*.swp
+
+# --- Archivos de sistema ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Temporales de Office ---
+~$*
