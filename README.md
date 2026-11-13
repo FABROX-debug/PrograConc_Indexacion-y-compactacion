@@ -3,8 +3,9 @@
 **Curso:** Programación Concurrente y Paralela
 **Entrega:** · propuesta de diseño
 
-> **Estado:** este avance es teórico y de diseño. **PACK() e INDEX() todavía no están implementados.**
-> El código de este repositorio es el proyecto anterior, que usaremos como base.
+> **Estado:** hay una **primera versión funcional de PACK() e INDEX()** (serial y paralela) en
+> [`LSDFS_Bancario`](LSDFS_Bancario), validada con 100, 1 000 y 10 000 registros (ver sección 8).
+> El proyecto anterior se conserva sin cambios en `proyecto-base/pregunta2`.
 
 ---
 
@@ -66,20 +67,20 @@ Para buscar la cuenta `10 045 210`, se aplica **búsqueda binaria** sobre el ín
 
 ## 5. Estado actual del avance
 
-| Ya existe (proyecto anterior) | Por adaptar | Por implementar |
-|---|---|---|
-| 25 archivos regionales de acceso directo | Formato del registro (campo de estado y longitud variable) | Metadata |
-| Lectura por bloques | Generador de datos con registros marcados | PACK() serial y paralelo |
-| Versión serial y paralela con hilos | Reparto de trabajo para PACK e INDEX | INDEX() serial y paralelo |
-| Balanceo de carga y métricas | | Pruebas y medición de tiempos |
+| Terminado (LSDFS_Bancario) | Pendiente |
+|---|---|
+| Registro de longitud variable con campo de estado y textos variables | Paralelizar dentro de un mismo archivo (hoy LIMA lo procesa un solo hilo) |
+| Metadata persistente por archivo y global | Medir con volúmenes grandes y repeticiones para obtener speedup confiable |
+| Generador con cantidad elegida y datos que se conservan entre ejecuciones | Recuperar al iniciar los `.tmp` de un PACK interrumpido |
+| PACK() serial y paralelo, con validación antes de reemplazar el archivo | Índices por otros campos (fecha, monto) |
+| INDEX() serial y paralelo, búsqueda binaria y reconstrucción del índice desactualizado | |
+| Pruebas automáticas y medición de tiempos | |
 
 ## 6. Próximas actividades
 
-1. Definir el formato del registro con campo de estado y la estructura de la metadata.
-2. Adaptar el generador para crear registros marcados para eliminar.
-3. Implementar PACK() serial y luego la versión paralela.
-4. Implementar INDEX() serial, la búsqueda binaria y luego la versión paralela.
-5. Comparar tiempos serial y paralelo, y documentar los resultados.
+1. Paralelizar PACK e INDEX dentro de los archivos grandes.
+2. Probar con volúmenes mayores, hasta los 8,8 millones de registros.
+3. Repetir las mediciones y calcular speedup y eficiencia.
 
 ## 7. Cómo ejecutar el proyecto anterior
 
@@ -99,13 +100,31 @@ java -cp out pcp.p2.Main comparar   # serial + las 3 estrategias de balanceo
 
 La configuración del clúster simulado (hilos y disco de cada nodo, estrategia y tamaño de bloque) está en [`cluster.properties`](proyecto-base/pregunta2/cluster.properties).
 
+## 8. Implementación: LSDFS_Bancario
+
+Proyecto independiente en Java estándar con un menú de consola para generar datos, marcar registros, ejecutar PACK e INDEX en versión serial y paralela, buscar movimientos por cuenta y comparar tiempos. Los detalles de formato están en [`LSDFS_Bancario/README.md`](LSDFS_Bancario/README.md).
+
+```bash
+cd LSDFS_Bancario
+javac -encoding UTF-8 -d out src/lsdfs/*.java
+java -cp out lsdfs.Main       # menú interactivo
+java -cp out lsdfs.Pruebas    # validación con 100, 1000 y 10000 registros
+```
+
+Los resultados de la validación y los tiempos medidos están en [`LSDFS_Bancario/resultados`](LSDFS_Bancario/resultados). Con estos tamaños, los tiempos dependen sobre todo del costo fijo por archivo y no de la cantidad de registros, así que todavía no sirven como medida de speedup.
+
 ## Estructura
 
 ```
 .
 ├── README.md
+├── LSDFS_Bancario/                   # PACK() e INDEX() serial y paralelo
+│   ├── src/lsdfs/*.java
+│   └── resultados/                   # validación y tiempos medidos
 ├── docs/
-│   └── Avance_50_Simplificado.pptx   # presentación del avance
+│   ├── Avance_50_Simplificado.pptx   # presentación del avance
+│   ├── Avance_50_Indexacion_Compactacion.pptx
+│   └── TRABAJO DE APLICACIÓN - ... .pdf  # enunciado del trabajo
 └── proyecto-base/
     └── pregunta2/                    # proyecto anterior (sin cambios)
         ├── cluster.properties

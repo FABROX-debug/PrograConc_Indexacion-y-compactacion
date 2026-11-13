@@ -1,0 +1,7 @@
+
+=== COMPARACION desde el menu | 2026-11-12T20:25:25 ===
+Repositorio: 25 archivos, 790 registros (620 activos, 170 marcados), 55.4 KB | hilos=12 | nucleos=12
+Rep     PACK serial  PACK paralelo   INDEX serial   INDEX paral. Equivalentes
+1         157.17 ms      103.14 ms      172.40 ms      127.18 ms           SI
+2         199.66 ms       85.75 ms      202.11 ms      111.09 ms           SI
+3         217.17 ms       85.94 ms      171.82 ms      105.20 ms           SI

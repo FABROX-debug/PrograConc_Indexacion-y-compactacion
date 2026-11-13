@@ -1,0 +1,5 @@
+# Compilados y datos generados localmente (se recrean con el programa)
+out/
+datos/
+trabajo/
+pruebas/

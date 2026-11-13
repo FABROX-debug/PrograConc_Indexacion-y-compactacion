@@ -1,0 +1,72 @@
+VALIDACION LSDFS_Bancario - 2026-11-12T20:25:52 | nucleos=12 | hilos paralelos=12 | Java 23
+
+================ N = 100 registros ================
+  [ OK ] Se generaron exactamente 100 registros
+  Marcados para eliminar: 22
+  [ OK ] Metadata tras marcar: activos + marcados = total
+  [ OK ] PACK serial conserva todos los activos byte a byte y en el mismo orden
+  [ OK ] PACK serial elimina solo los marcados (100 - 22 = 78)
+  [ OK ] PACK serial actualiza metadata (marcados=0, version 2, bytes reales)
+  [ OK ] PACK serial deja desactualizados solo los indices de archivos compactados
+  [ OK ] PACK paralelo conserva todos los activos byte a byte y en el mismo orden
+  [ OK ] PACK paralelo elimina solo los marcados (100 - 22 = 78)
+  [ OK ] PACK paralelo actualiza metadata (marcados=0, version 2, bytes reales)
+  [ OK ] PACK paralelo deja desactualizados solo los indices de archivos compactados
+  [ OK ] PACK serial y paralelo: archivos .dat identicos
+  [ OK ] INDEX: todos los indices vigentes
+  [ OK ] INDEX serial y paralelo: archivos .dat e .idx identicos
+  [ OK ] INDEX: entradas ordenadas por cuenta y offsets apuntan a registros de esa cuenta
+  [ OK ] INDEX encuentra todos los movimientos de las 41 cuentas (15 cuentas con movimientos repetidos), igual que la busqueda lineal
+  [ OK ] Cuenta inexistente devuelve 0 movimientos
+  [ OK ] Tras marcar la cuenta 10000000 (6 movs) la busqueda devuelve 0 y omite 6
+  [ OK ] PACK posterior deja LIMA.idx desactualizado, la busqueda lo reconstruye y los resultados son correctos
+
+================ N = 1000 registros ================
+  [ OK ] Se generaron exactamente 1000 registros
+  Marcados para eliminar: 184
+  [ OK ] Metadata tras marcar: activos + marcados = total
+  [ OK ] PACK serial conserva todos los activos byte a byte y en el mismo orden
+  [ OK ] PACK serial elimina solo los marcados (1000 - 184 = 816)
+  [ OK ] PACK serial actualiza metadata (marcados=0, version 2, bytes reales)
+  [ OK ] PACK serial deja desactualizados solo los indices de archivos compactados
+  [ OK ] PACK paralelo conserva todos los activos byte a byte y en el mismo orden
+  [ OK ] PACK paralelo elimina solo los marcados (1000 - 184 = 816)
+  [ OK ] PACK paralelo actualiza metadata (marcados=0, version 2, bytes reales)
+  [ OK ] PACK paralelo deja desactualizados solo los indices de archivos compactados
+  [ OK ] PACK serial y paralelo: archivos .dat identicos
+  [ OK ] INDEX: todos los indices vigentes
+  [ OK ] INDEX serial y paralelo: archivos .dat e .idx identicos
+  [ OK ] INDEX: entradas ordenadas por cuenta y offsets apuntan a registros de esa cuenta
+  [ OK ] INDEX encuentra todos los movimientos de las 133 cuentas (129 cuentas con movimientos repetidos), igual que la busqueda lineal
+  [ OK ] Cuenta inexistente devuelve 0 movimientos
+  [ OK ] Tras marcar la cuenta 10000000 (3 movs) la busqueda devuelve 0 y omite 3
+  [ OK ] PACK posterior deja LIMA.idx desactualizado, la busqueda lo reconstruye y los resultados son correctos
+
+================ N = 10000 registros ================
+  [ OK ] Se generaron exactamente 10000 registros
+  Marcados para eliminar: 1933
+  [ OK ] Metadata tras marcar: activos + marcados = total
+  [ OK ] PACK serial conserva todos los activos byte a byte y en el mismo orden
+  [ OK ] PACK serial elimina solo los marcados (10000 - 1933 = 8067)
+  [ OK ] PACK serial actualiza metadata (marcados=0, version 2, bytes reales)
+  [ OK ] PACK serial deja desactualizados solo los indices de archivos compactados
+  [ OK ] PACK paralelo conserva todos los activos byte a byte y en el mismo orden
+  [ OK ] PACK paralelo elimina solo los marcados (10000 - 1933 = 8067)
+  [ OK ] PACK paralelo actualiza metadata (marcados=0, version 2, bytes reales)
+  [ OK ] PACK paralelo deja desactualizados solo los indices de archivos compactados
+  [ OK ] PACK serial y paralelo: archivos .dat identicos
+  [ OK ] INDEX: todos los indices vigentes
+  [ OK ] INDEX serial y paralelo: archivos .dat e .idx identicos
+  [ OK ] INDEX: entradas ordenadas por cuenta y offsets apuntan a registros de esa cuenta
+  [ OK ] INDEX encuentra todos los movimientos de las 1239 cuentas (1232 cuentas con movimientos repetidos), igual que la busqueda lineal
+  [ OK ] Cuenta inexistente devuelve 0 movimientos
+  [ OK ] Tras marcar la cuenta 10000000 (8 movs) la busqueda devuelve 0 y omite 8
+  [ OK ] PACK posterior deja LIMA.idx desactualizado, la busqueda lo reconstruye y los resultados son correctos
+
+TIEMPOS MEDIDOS (una ejecucion por tamano, en milisegundos; incluyen lectura/escritura de disco):
+N        Marcados   PACK serial   PACK paral.  INDEX serial  INDEX paral.
+100            22     379.91 ms     134.18 ms     273.43 ms     108.30 ms
+1000          184     187.09 ms      84.09 ms     194.85 ms     129.50 ms
+10000        1933     297.62 ms     141.86 ms     235.37 ms     108.44 ms
+
+RESULTADO: TODOS LOS CHEQUEOS PASARON
