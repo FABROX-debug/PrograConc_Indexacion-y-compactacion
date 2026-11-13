@@ -4,8 +4,7 @@
 **Entrega:** · propuesta de diseño
 
 > **Estado:** hay una **primera versión funcional de PACK() e INDEX()** (serial y paralela) en
-> [`LSDFS_Bancario`](LSDFS_Bancario), validada con 100, 1 000 y 10 000 registros (ver sección 8).
-> El proyecto anterior se conserva sin cambios en `proyecto-base/pregunta2`.
+> [`LSDFS_Bancario`](LSDFS_Bancario), validada con 100, 1 000 y 10 000 registros (ver sección 7).
 
 ---
 
@@ -22,7 +21,7 @@ Un repositorio de datos a gran escala es un conjunto de archivos F1 … FN de ac
 
 ## 2. Proyecto base: procesamiento bancario paralelo
 
-Usamos la **pregunta 2** de nuestro proyecto anterior ([`proyecto-base/pregunta2`](proyecto-base/pregunta2)). El programa:
+Partimos de la **pregunta 2** de nuestro proyecto anterior (su código no se incluye en este repositorio; `LSDFS_Bancario` copia o adapta las partes que reutiliza). Ese programa:
 
 - Genera **25 archivos regionales** (`LIMA.dat` … `TUMBES.dat`) con unos **8,8 millones de movimientos bancarios de prueba**. Son datos sintéticos, no transacciones reales.
 - Guarda cada movimiento como un registro binario de 40 bytes y lo lee **por bloques** con `RandomAccessFile`.
@@ -82,25 +81,7 @@ Para buscar la cuenta `10 045 210`, se aplica **búsqueda binaria** sobre el ín
 2. Probar con volúmenes mayores, hasta los 8,8 millones de registros.
 3. Repetir las mediciones y calcular speedup y eficiencia.
 
-## 7. Cómo ejecutar el proyecto anterior
-
-**Requisitos:** JDK 17 o superior (se desarrolló con JDK 23) y unos **700 MB libres** en disco.
-Al iniciar, el programa genera `repositorio/` (unos 340 MB) y copia los datos a `cluster/`. Estas carpetas no se suben al repositorio.
-
-**Desde la terminal** (dentro de `proyecto-base/pregunta2`):
-
-```bash
-javac -d out src/pcp/p2/*.java
-java -cp out pcp.p2.Main            # menú interactivo
-java -cp out pcp.p2.Main serial     # solo versión serial
-java -cp out pcp.p2.Main comparar   # serial + las 3 estrategias de balanceo
-```
-
-**Desde IntelliJ IDEA:** abrir la carpeta `proyecto-base/pregunta2` y ejecutar la clase `pcp.p2.Main`. El directorio de trabajo debe ser `proyecto-base/pregunta2`, porque ahí está `cluster.properties`.
-
-La configuración del clúster simulado (hilos y disco de cada nodo, estrategia y tamaño de bloque) está en [`cluster.properties`](proyecto-base/pregunta2/cluster.properties).
-
-## 8. Implementación: LSDFS_Bancario
+## 7. Implementación: LSDFS_Bancario
 
 Proyecto independiente en Java estándar con un menú de consola para generar datos, marcar registros, ejecutar PACK e INDEX en versión serial y paralela, buscar movimientos por cuenta y comparar tiempos. Los detalles de formato están en [`LSDFS_Bancario/README.md`](LSDFS_Bancario/README.md).
 
@@ -125,9 +106,4 @@ Los resultados de la validación y los tiempos medidos están en [`LSDFS_Bancari
 │   ├── Avance_50_Simplificado.pptx   # presentación del avance
 │   ├── Avance_50_Indexacion_Compactacion.pptx
 │   └── TRABAJO DE APLICACIÓN - ... .pdf  # enunciado del trabajo
-└── proyecto-base/
-    └── pregunta2/                    # proyecto anterior (sin cambios)
-        ├── cluster.properties
-        ├── pregunta2.iml
-        └── src/pcp/p2/*.java
 ```
